@@ -26,6 +26,8 @@ import { AgentOrchestrator } from './orchestration/AgentOrchestrator.js';
 import { ORCHESTRATION_TOOLS } from './tools/orchestration-tools.js';
 import { AnalyticsEngine } from './analytics/AnalyticsEngine.js';
 import { ANALYTICS_TOOLS } from './tools/analytics-tools.js';
+import { ProductionManager } from './production/ProductionManager.js';
+import { PRODUCTION_TOOLS } from './tools/production-tools.js';
 import { 
   HandoffRequest, 
   HandoffStatus, 
@@ -46,12 +48,13 @@ class HandoffMCP {
   private workflowEngine: WorkflowEngine;
   private agentOrchestrator: AgentOrchestrator;
   private analyticsEngine: AnalyticsEngine;
+  private productionManager: ProductionManager;
 
   constructor() {
     this.server = new Server(
       {
         name: 'handoff-mcp',
-        version: '1.4.0',
+        version: '1.5.0',
       },
       {
         capabilities: {
@@ -92,6 +95,29 @@ class HandoffMCP {
         enableAutoMetrics: true
       }
     );
+    
+    // Initialize production manager
+    this.productionManager = new ProductionManager({
+      authentication: {
+        enabled: true,
+        type: 'api_key'
+      },
+      authorization: {
+        enabled: true,
+        type: 'rbac'
+      },
+      encryption: {
+        at_rest: true,
+        in_transit: true,
+        algorithm: 'aes-256-gcm',
+        key_rotation_days: 90
+      },
+      audit: {
+        enabled: true,
+        log_level: 'security',
+        retention_days: 90
+      }
+    });
     
     this.setupToolHandlers();
   }
@@ -434,7 +460,8 @@ class HandoffMCP {
             ...CONTEXT_TOOLS, 
             ...WORKFLOW_TOOLS, 
             ...ORCHESTRATION_TOOLS,
-            ...ANALYTICS_TOOLS
+            ...ANALYTICS_TOOLS,
+            ...PRODUCTION_TOOLS
           ]
         };
     });

@@ -1,0 +1,194 @@
+{
+  "timestamp": "2025-08-21T18:31:18.388Z",
+  "version": "1.5.0",
+  "users": [
+    {
+      "id": "2325aaff-0f82-4214-bc4b-b09d855e2205",
+      "username": "test_admin",
+      "roles": [
+        "admin",
+        "developer"
+      ],
+      "metadata": {
+        "email": "admin@example.com",
+        "team": "Platform",
+        "department": "Engineering"
+      },
+      "created_at": "2025-08-21T18:31:18.387Z",
+      "status": "active",
+      "api_keys": [
+        {
+          "id": "0862f232-a9f6-4d62-99f8-24f6706ecef9",
+          "key_hash": "8676096e434604cc7880f6e3a66433f6967a2d9a269f15ee9813f74d4ad765c0",
+          "name": "Primary API Key",
+          "expires_at": "2025-09-20T18:31:18.387Z",
+          "permissions": [
+            {
+              "resource": "workflows",
+              "actions": [
+                "create",
+                "read",
+                "update"
+              ]
+            },
+            {
+              "resource": "agents",
+              "actions": [
+                "read",
+                "execute"
+              ]
+            }
+          ],
+          "rate_limit": {
+            "requests_per_minute": 100,
+            "tokens_per_minute": 10000
+          },
+          "last_used": "2025-08-21T18:31:18.387Z"
+        }
+      ]
+    }
+  ],
+  "roles": [
+    {
+      "id": "admin",
+      "name": "Administrator",
+      "permissions": [
+        {
+          "resource": "*",
+          "actions": [
+            "*"
+          ]
+        }
+      ],
+      "priority": 100
+    },
+    {
+      "id": "developer",
+      "name": "Developer",
+      "permissions": [
+        {
+          "resource": "projects",
+          "actions": [
+            "create",
+            "read",
+            "update"
+          ]
+        },
+        {
+          "resource": "workflows",
+          "actions": [
+            "create",
+            "read",
+            "update",
+            "execute"
+          ]
+        },
+        {
+          "resource": "agents",
+          "actions": [
+            "read",
+            "assign"
+          ]
+        },
+        {
+          "resource": "analytics",
+          "actions": [
+            "read"
+          ]
+        }
+      ],
+      "priority": 50
+    },
+    {
+      "id": "viewer",
+      "name": "Viewer",
+      "permissions": [
+        {
+          "resource": "projects",
+          "actions": [
+            "read"
+          ]
+        },
+        {
+          "resource": "workflows",
+          "actions": [
+            "read"
+          ]
+        },
+        {
+          "resource": "agents",
+          "actions": [
+            "read"
+          ]
+        },
+        {
+          "resource": "analytics",
+          "actions": [
+            "read"
+          ]
+        }
+      ],
+      "priority": 10
+    }
+  ],
+  "policies": [],
+  "audit_logs": [
+    {
+      "id": "7950bee7-8a5f-4827-8cae-93ce7e855949",
+      "timestamp": "2025-08-21T18:31:18.387Z",
+      "action": "user.create",
+      "resource": "user:2325aaff-0f82-4214-bc4b-b09d855e2205",
+      "result": "success",
+      "metadata": {
+        "username": "test_admin",
+        "roles": [
+          "admin",
+          "developer"
+        ]
+      }
+    },
+    {
+      "id": "6ccc7206-05a7-4dbd-b784-331c9169b71f",
+      "timestamp": "2025-08-21T18:31:18.387Z",
+      "action": "api_key.create",
+      "resource": "api_key:0862f232-a9f6-4d62-99f8-24f6706ecef9",
+      "result": "success",
+      "user_id": "2325aaff-0f82-4214-bc4b-b09d855e2205",
+      "metadata": {
+        "name": "Primary API Key"
+      }
+    },
+    {
+      "id": "0c71b508-aa4b-499b-bd42-7f17bd1c186f",
+      "timestamp": "2025-08-21T18:31:18.387Z",
+      "action": "auth.success",
+      "resource": "api",
+      "result": "success",
+      "user_id": "2325aaff-0f82-4214-bc4b-b09d855e2205"
+    },
+    {
+      "id": "92f12bb2-0149-40b2-81f6-fcae98a56bc9",
+      "timestamp": "2025-08-21T18:31:18.388Z",
+      "action": "authz.granted",
+      "resource": "workflows",
+      "result": "success",
+      "user_id": "2325aaff-0f82-4214-bc4b-b09d855e2205",
+      "metadata": {
+        "role": "admin",
+        "action": "create"
+      }
+    },
+    {
+      "id": "a2f216e3-0a57-4526-911f-e1a89e1edf85",
+      "timestamp": "2025-08-21T18:31:18.388Z",
+      "action": "authz.granted",
+      "resource": "agents",
+      "result": "success",
+      "user_id": "2325aaff-0f82-4214-bc4b-b09d855e2205",
+      "metadata": {
+        "role": "admin",
+        "action": "delete"
+      }
+    }
+  ]
+}
