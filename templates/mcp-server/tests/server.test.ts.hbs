@@ -1,0 +1,34 @@
+import { Server } from '@modelcontextprotocol/sdk/server/index.js';
+import { {{pascalCase projectName}}Server } from '../src/server';
+
+describe('{{pascalCase projectName}}Server', () => {
+  let server: {{pascalCase projectName}}Server;
+
+  beforeEach(() => {
+    server = new {{pascalCase projectName}}Server();
+  });
+
+  describe('initialization', () => {
+    it('should create server instance', () => {
+      expect(server).toBeDefined();
+    });
+
+    it('should have correct server info', () => {
+      const serverInstance = (server as any).server as Server;
+      expect(serverInstance.serverInfo.name).toBe('{{kebabCase projectName}}');
+      expect(serverInstance.serverInfo.version).toBe('{{version}}');
+    });
+  });
+
+  describe('tools', () => {
+    it('should handle tool requests', async () => {
+      // Add your tool tests here
+    });
+  });
+
+  describe('resources', () => {
+    it('should handle resource requests', async () => {
+      // Add your resource tests here
+    });
+  });
+});

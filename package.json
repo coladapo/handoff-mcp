@@ -1,0 +1,59 @@
+{
+  "name": "handoff-mcp",
+  "version": "1.0.0",
+  "description": "Client-agnostic MCP Server for strategic/tactical workflow orchestration in AI-assisted development",
+  "type": "module",
+  "main": "dist/src/index.js",
+  "bin": {
+    "handoff-mcp": "dist/src/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc && node dist/src/index.js",
+    "watch": "tsc --watch",
+    "start": "node dist/src/index.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src/**/*.ts",
+    "clean": "rm -rf dist coverage"
+  },
+  "keywords": [
+    "mcp",
+    "workflow",
+    "handoff",
+    "strategic",
+    "tactical",
+    "project-management",
+    "ai-development",
+    "orchestration"
+  ],
+  "author": "coladapo",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.5.0",
+    "@types/handlebars": "^4.0.40",
+    "@types/js-yaml": "^4.0.9",
+    "@types/natural": "^5.1.5",
+    "better-sqlite3": "^11.3.0",
+    "glob": "^11.0.3",
+    "handlebars": "^4.7.8",
+    "js-yaml": "^4.1.0",
+    "natural": "^8.1.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.11",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^22.0.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2",
+    "typescript": "^5.5.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

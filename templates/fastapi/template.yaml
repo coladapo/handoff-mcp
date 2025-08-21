@@ -1,0 +1,51 @@
+name: fastapi
+framework: FastAPI
+description: FastAPI REST API template with async support
+variables:
+  description: "A modern, fast web API with automatic docs"
+  version: "0.1.0"
+  author: "Developer"
+  port: 8000
+files:
+  - path: pyproject.toml
+    template: pyproject.toml.hbs
+  - path: requirements.txt
+    template: requirements.txt.hbs
+  - path: src/__init__.py
+    template: src/__init__.py.hbs
+  - path: src/main.py
+    template: src/main.py.hbs
+  - path: src/config.py
+    template: src/config.py.hbs
+  - path: src/routers/__init__.py
+    template: src/routers/__init__.py.hbs
+  - path: src/routers/health.py
+    template: src/routers/health.py.hbs
+  - path: src/routers/items.py
+    template: src/routers/items.py.hbs
+    condition: codeHints.patterns.includes('crud')
+  - path: src/models/__init__.py
+    template: src/models/__init__.py.hbs
+  - path: src/models/item.py
+    template: src/models/item.py.hbs
+    condition: codeHints.patterns.includes('crud')
+  - path: .env.example
+    template: env.example.hbs
+  - path: README.md
+    template: README.md.hbs
+  - path: .gitignore
+    template: gitignore.hbs
+  - path: Dockerfile
+    template: Dockerfile.hbs
+  - path: src/database.py
+    template: src/database.py.hbs
+    condition: codeHints.features.includes('database')
+  - path: src/auth.py
+    template: src/auth.py.hbs
+    condition: codeHints.features.includes('auth')
+  - path: tests/__init__.py
+    template: tests/__init__.py.hbs
+    condition: codeHints.features.includes('testing')
+  - path: tests/test_main.py
+    template: tests/test_main.py.hbs
+    condition: codeHints.features.includes('testing')

@@ -1,0 +1,56 @@
+from contextlib import asynccontextmanager
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from src.config import settings
+from src.routers import health
+{{#if (includes codeHints.patterns 'crud')}}
+from src.routers import items
+{{/if}}
+{{#if (includes codeHints.features 'database')}}
+from src.database import init_db
+{{/if}}
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Handle startup and shutdown events."""
+    {{#if (includes codeHints.features 'database')}}
+    # Initialize database
+    await init_db()
+    {{/if}}
+    yield
+    # Cleanup code here (if needed)
+
+
+app = FastAPI(
+    title="{{projectName}}",
+    description="{{description}}",
+    version="{{version}}",
+    lifespan=lifespan,
+)
+
+# Configure CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.CORS_ORIGINS,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Include routers
+app.include_router(health.router, tags=["health"])
+{{#if (includes codeHints.patterns 'crud')}}
+app.include_router(items.router, prefix="/api/v1", tags=["items"])
+{{/if}}
+
+
+@app.get("/")
+async def root():
+    """Root endpoint."""
+    return {
+        "message": "Welcome to {{projectName}} API",
+        "version": "{{version}}",
+        "docs": "/docs",
+        "redoc": "/redoc",
+    }

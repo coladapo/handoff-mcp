@@ -1,0 +1,36 @@
+import { Tool } from '@modelcontextprotocol/sdk/types.js';
+
+// Define your tools here
+export const tools: Tool[] = [
+  {
+    name: 'example_tool',
+    description: 'An example tool that demonstrates the pattern',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        message: {
+          type: 'string',
+          description: 'A message to process'
+        }
+      },
+      required: ['message']
+    }
+  }
+];
+
+// Tool handlers
+export async function handleToolCall(name: string, args: any): Promise<any> {
+  switch (name) {
+    case 'example_tool':
+      return {
+        content: [
+          {
+            type: 'text',
+            text: `Processed: ${args.message}`
+          }
+        ]
+      };
+    default:
+      throw new Error(`Unknown tool: ${name}`);
+  }
+}

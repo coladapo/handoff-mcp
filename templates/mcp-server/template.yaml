@@ -1,0 +1,31 @@
+name: mcp-server
+framework: TypeScript
+description: TypeScript MCP Server template with complete project structure
+variables:
+  description: "A Model Context Protocol server"
+  version: "1.0.0"
+  author: "Developer"
+files:
+  - path: package.json
+    template: package.json.hbs
+  - path: tsconfig.json
+    template: tsconfig.json.hbs
+  - path: src/index.ts
+    template: src/index.ts.hbs
+  - path: src/server.ts
+    template: src/server.ts.hbs
+  - path: src/tools/index.ts
+    template: src/tools/index.ts.hbs
+    condition: codeHints.features.includes('api')
+  - path: src/resources/index.ts
+    template: src/resources/index.ts.hbs
+  - path: README.md
+    template: README.md.hbs
+  - path: .gitignore
+    template: gitignore.hbs
+  - path: jest.config.js
+    template: jest.config.js.hbs
+    condition: codeHints.features.includes('testing')
+  - path: tests/server.test.ts
+    template: tests/server.test.ts.hbs
+    condition: codeHints.features.includes('testing')

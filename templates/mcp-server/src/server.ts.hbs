@@ -1,0 +1,63 @@
+import { Tool, Resource } from '@modelcontextprotocol/sdk/types.js';
+{{#if (includes codeHints.features 'api')}}
+import { tools, handleToolCall } from './tools/index.js';
+{{/if}}
+import { resources, handleResourceRead } from './resources/index.js';
+
+export class {{pascalCase projectName}}Server {
+  {{#if (includes codeHints.features 'api')}}
+  private tools: Tool[] = tools;
+  {{else}}
+  private tools: Tool[] = [
+    {
+      name: 'example_tool',
+      description: 'An example tool for {{projectName}}',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          message: {
+            type: 'string',
+            description: 'A message to process'
+          }
+        },
+        required: ['message']
+      }
+    }
+  ];
+  {{/if}}
+
+  private resources: Resource[] = resources;
+
+  async listTools() {
+    return { tools: this.tools };
+  }
+
+  async callTool(name: string, args: any) {
+    {{#if (includes codeHints.features 'api')}}
+    return await handleToolCall(name, args);
+    {{else}}
+    switch (name) {
+      case 'example_tool':
+        return {
+          content: [
+            {
+              type: 'text',
+              text: `Processed message: ${args.message}`
+            }
+          ]
+        };
+      
+      default:
+        throw new Error(`Unknown tool: ${name}`);
+    }
+    {{/if}}
+  }
+
+  async listResources() {
+    return { resources: this.resources };
+  }
+
+  async readResource(uri: string) {
+    return await handleResourceRead(uri);
+  }
+}

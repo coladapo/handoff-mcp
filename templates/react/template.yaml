@@ -1,0 +1,43 @@
+name: react
+framework: React
+description: React application with TypeScript and Vite
+variables:
+  description: "A modern React application"
+  version: "0.1.0"
+  author: "Developer"
+files:
+  - path: package.json
+    template: package.json.hbs
+  - path: tsconfig.json
+    template: tsconfig.json.hbs
+  - path: tsconfig.node.json
+    template: tsconfig.node.json.hbs
+  - path: vite.config.ts
+    template: vite.config.ts.hbs
+  - path: index.html
+    template: index.html.hbs
+  - path: src/main.tsx
+    template: src/main.tsx.hbs
+  - path: src/App.tsx
+    template: src/App.tsx.hbs
+  - path: src/App.css
+    template: src/App.css.hbs
+  - path: src/index.css
+    template: src/index.css.hbs
+  - path: src/vite-env.d.ts
+    template: src/vite-env.d.ts.hbs
+  - path: README.md
+    template: README.md.hbs
+  - path: .gitignore
+    template: gitignore.hbs
+  - path: .eslintrc.cjs
+    template: eslintrc.cjs.hbs
+  - path: src/components/Counter.tsx
+    template: src/components/Counter.tsx.hbs
+    condition: codeHints.patterns.includes('interactive')
+  - path: src/hooks/useApi.ts
+    template: src/hooks/useApi.ts.hbs
+    condition: codeHints.features.includes('api')
+  - path: src/services/api.ts
+    template: src/services/api.ts.hbs
+    condition: codeHints.features.includes('api')

@@ -1,0 +1,41 @@
+name: express
+framework: Express.js
+description: Express.js REST API template with TypeScript
+variables:
+  description: "A RESTful API server"
+  version: "1.0.0"
+  author: "Developer"
+  port: 3000
+files:
+  - path: package.json
+    template: package.json.hbs
+  - path: tsconfig.json
+    template: tsconfig.json.hbs
+  - path: src/index.ts
+    template: src/index.ts.hbs
+  - path: src/app.ts
+    template: src/app.ts.hbs
+  - path: src/routes/index.ts
+    template: src/routes/index.ts.hbs
+  - path: src/middleware/error.ts
+    template: src/middleware/error.ts.hbs
+  - path: src/controllers/health.ts
+    template: src/controllers/health.ts.hbs
+  - path: .env.example
+    template: env.example.hbs
+  - path: README.md
+    template: README.md.hbs
+  - path: .gitignore
+    template: gitignore.hbs
+  - path: src/models/index.ts
+    template: src/models/index.ts.hbs
+    condition: codeHints.features.includes('database')
+  - path: src/services/auth.ts
+    template: src/services/auth.ts.hbs
+    condition: codeHints.features.includes('auth')
+  - path: jest.config.js
+    template: jest.config.js.hbs
+    condition: codeHints.features.includes('testing')
+  - path: tests/app.test.ts
+    template: tests/app.test.ts.hbs
+    condition: codeHints.features.includes('testing')

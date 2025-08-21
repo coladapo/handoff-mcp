@@ -1,0 +1,56 @@
+# {{projectName}}
+
+{{description}}
+
+## Features
+
+- TypeScript MCP Server implementation
+- Example tools and resources
+- Built-in development tools
+
+## Installation
+
+```bash
+npm install
+```
+
+## Development
+
+```bash
+npm run dev
+```
+
+## Build
+
+```bash
+npm run build
+```
+
+## Usage
+
+Add to your MCP client configuration:
+
+```json
+{
+  "mcpServers": {
+    "{{projectName}}": {
+      "command": "node",
+      "args": ["dist/index.js"]
+    }
+  }
+}
+```
+
+## API
+
+### Tools
+
+- `example_tool`: Processes a message and returns it
+
+### Resources
+
+- `example://resource`: Returns example content
+
+## License
+
+MIT

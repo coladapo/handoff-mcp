@@ -1,0 +1,63 @@
+import request from 'supertest';
+import app from '../src/app';
+
+describe('{{projectName}} API', () => {
+  describe('GET /', () => {
+    it('should return API information', async () => {
+      const response = await request(app)
+        .get('/')
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(response.body).toHaveProperty('message');
+      expect(response.body).toHaveProperty('version');
+      expect(response.body).toHaveProperty('endpoints');
+    });
+  });
+
+  describe('GET /health', () => {
+    it('should return health status', async () => {
+      const response = await request(app)
+        .get('/health')
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(response.body).toHaveProperty('status', 'healthy');
+      expect(response.body).toHaveProperty('timestamp');
+      expect(response.body).toHaveProperty('service');
+      expect(response.body).toHaveProperty('uptime');
+    });
+  });
+
+  {{#if (includes codeHints.patterns 'crud')}}
+  describe('CRUD Operations', () => {
+    describe('GET /items', () => {
+      it('should return empty items array', async () => {
+        const response = await request(app)
+          .get('/items')
+          .expect('Content-Type', /json/)
+          .expect(200);
+
+        expect(response.body).toHaveProperty('items');
+        expect(Array.isArray(response.body.items)).toBe(true);
+      });
+    });
+
+    describe('POST /items', () => {
+      it('should create a new item', async () => {
+        const newItem = { name: 'Test Item', description: 'Test Description' };
+        
+        const response = await request(app)
+          .post('/items')
+          .send(newItem)
+          .expect('Content-Type', /json/)
+          .expect(201);
+
+        expect(response.body).toHaveProperty('id');
+        expect(response.body.name).toBe(newItem.name);
+        expect(response.body.description).toBe(newItem.description);
+      });
+    });
+  });
+  {{/if}}
+});

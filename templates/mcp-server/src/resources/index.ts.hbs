@@ -1,0 +1,29 @@
+import { Resource } from '@modelcontextprotocol/sdk/types.js';
+
+// Define your resources here
+export const resources: Resource[] = [
+  {
+    uri: 'example://resource',
+    name: 'Example Resource',
+    description: 'An example resource that can be accessed by the MCP client',
+    mimeType: 'text/plain'
+  }
+];
+
+// Resource handlers
+export async function handleResourceRead(uri: string): Promise<any> {
+  switch (uri) {
+    case 'example://resource':
+      return {
+        contents: [
+          {
+            uri: 'example://resource',
+            mimeType: 'text/plain',
+            text: 'This is example resource content'
+          }
+        ]
+      };
+    default:
+      throw new Error(`Unknown resource: ${uri}`);
+  }
+}

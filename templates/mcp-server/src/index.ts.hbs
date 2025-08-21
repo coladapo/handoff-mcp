@@ -1,0 +1,57 @@
+#!/usr/bin/env node
+
+import { Server } from '@modelcontextprotocol/sdk/server/index.js';
+import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import {
+  CallToolRequestSchema,
+  ListToolsRequestSchema,
+  ListResourcesRequestSchema,
+  ReadResourceRequestSchema,
+} from '@modelcontextprotocol/sdk/types.js';
+
+import { {{pascalCase projectName}}Server } from './server.js';
+
+async function main() {
+  const server = new Server(
+    {
+      name: '{{projectName}}',
+      version: '{{version}}',
+    },
+    {
+      capabilities: {
+        tools: {},
+        resources: {},
+      },
+    }
+  );
+
+  const {{camelCase projectName}}Server = new {{pascalCase projectName}}Server();
+
+  // Register handlers
+  server.setRequestHandler(ListToolsRequestSchema, async () => {
+    return await {{camelCase projectName}}Server.listTools();
+  });
+
+  server.setRequestHandler(CallToolRequestSchema, async (request) => {
+    return await {{camelCase projectName}}Server.callTool(request.params.name, request.params.arguments);
+  });
+
+  server.setRequestHandler(ListResourcesRequestSchema, async () => {
+    return await {{camelCase projectName}}Server.listResources();
+  });
+
+  server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
+    return await {{camelCase projectName}}Server.readResource(request.params.uri);
+  });
+
+  // Start server
+  const transport = new StdioServerTransport();
+  await server.connect(transport);
+  
+  console.error('{{projectName}} MCP server running on stdio');
+}
+
+main().catch((error) => {
+  console.error('Server error:', error);
+  process.exit(1);
+});

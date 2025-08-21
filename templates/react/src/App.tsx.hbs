@@ -1,0 +1,20 @@
+import './App.css'
+{{#if (includes codeHints.patterns 'interactive')}}
+import Counter from './components/Counter'
+{{/if}}
+
+function App() {
+  return (
+    <>
+      <div>
+        <h1>{{projectName}}</h1>
+        <p>{{description}}</p>
+      </div>
+      {{#if (includes codeHints.patterns 'interactive')}}
+      <Counter />
+      {{/if}}
+    </>
+  )
+}
+
+export default App

@@ -1,0 +1,85 @@
+# {{projectName}}
+
+{{description}}
+
+## Features
+
+- Express.js with TypeScript
+- RESTful API structure
+- Environment configuration
+- Error handling middleware
+- CORS enabled
+- Security headers with Helmet
+- Request logging with Morgan
+{{#if (includes codeHints.features 'database')}}
+- MongoDB integration with Mongoose
+{{/if}}
+{{#if (includes codeHints.features 'auth')}}
+- JWT authentication
+- Password hashing with bcrypt
+{{/if}}
+{{#if (includes codeHints.features 'testing')}}
+- Unit and integration tests with Jest
+{{/if}}
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js >= 18
+- npm or yarn
+{{#if (includes codeHints.features 'database')}}
+- MongoDB
+{{/if}}
+
+### Installation
+
+```bash
+npm install
+```
+
+### Configuration
+
+1. Copy `.env.example` to `.env`
+2. Update the environment variables as needed
+
+### Development
+
+```bash
+npm run dev
+```
+
+### Production
+
+```bash
+npm run build
+npm start
+```
+
+## API Endpoints
+
+- `GET /` - API information
+- `GET /health` - Health check endpoint
+{{#if (includes codeHints.patterns 'crud')}}
+- `GET /items` - List all items
+- `POST /items` - Create a new item
+- `GET /items/:id` - Get item by ID
+- `PUT /items/:id` - Update item
+- `DELETE /items/:id` - Delete item
+{{/if}}
+
+## Scripts
+
+- `npm run dev` - Start development server with hot reload
+- `npm run build` - Build for production
+- `npm start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run format` - Format code with Prettier
+{{#if (includes codeHints.features 'testing')}}
+- `npm test` - Run tests
+- `npm run test:watch` - Run tests in watch mode
+{{/if}}
+
+## License
+
+MIT

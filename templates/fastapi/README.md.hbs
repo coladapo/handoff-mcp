@@ -1,0 +1,129 @@
+# {{projectName}}
+
+{{description}}
+
+## Features
+
+- FastAPI with Python 3.11+
+- Async/await support
+- Automatic API documentation (Swagger/ReDoc)
+- Pydantic for data validation
+- Environment-based configuration
+- CORS middleware
+- Type hints throughout
+{{#if (includes codeHints.features 'database')}}
+- Async PostgreSQL with SQLAlchemy
+- Database migrations with Alembic
+{{/if}}
+{{#if (includes codeHints.features 'auth')}}
+- JWT authentication
+- Password hashing with bcrypt
+{{/if}}
+{{#if (includes codeHints.features 'testing')}}
+- Pytest for testing
+- Async test support
+{{/if}}
+
+## Getting Started
+
+### Prerequisites
+
+- Python 3.11 or higher
+- Poetry or pip
+{{#if (includes codeHints.features 'database')}}
+- PostgreSQL
+{{/if}}
+
+### Installation
+
+Using Poetry:
+```bash
+poetry install
+```
+
+Or using pip:
+```bash
+pip install -r requirements.txt
+```
+
+### Configuration
+
+1. Copy `.env.example` to `.env`
+2. Update the environment variables as needed
+
+### Development
+
+```bash
+# Using Poetry
+poetry run uvicorn src.main:app --reload --host 0.0.0.0 --port {{port}}
+
+# Or directly
+uvicorn src.main:app --reload --host 0.0.0.0 --port {{port}}
+```
+
+### Production
+
+```bash
+uvicorn src.main:app --host 0.0.0.0 --port {{port}}
+```
+
+## API Documentation
+
+Once the server is running, you can access:
+
+- Swagger UI: http://localhost:{{port}}/docs
+- ReDoc: http://localhost:{{port}}/redoc
+- OpenAPI JSON: http://localhost:{{port}}/openapi.json
+
+## API Endpoints
+
+- `GET /` - API information
+- `GET /health` - Health check endpoint
+{{#if (includes codeHints.patterns 'crud')}}
+- `GET /api/v1/items` - List all items
+- `POST /api/v1/items` - Create a new item
+- `GET /api/v1/items/{item_id}` - Get item by ID
+- `PUT /api/v1/items/{item_id}` - Update item
+- `DELETE /api/v1/items/{item_id}` - Delete item
+{{/if}}
+
+{{#if (includes codeHints.features 'testing')}}
+## Testing
+
+```bash
+# Run all tests
+poetry run pytest
+
+# Run with coverage
+poetry run pytest --cov=src
+
+# Run specific test file
+poetry run pytest tests/test_main.py
+```
+{{/if}}
+
+## Code Quality
+
+```bash
+# Format code with Black
+poetry run black src tests
+
+# Lint with Ruff
+poetry run ruff src tests
+
+# Type checking with mypy
+poetry run mypy src
+```
+
+## Docker
+
+Build and run with Docker:
+
+```bash
+docker build -t {{kebabCase projectName}} .
+docker run -p {{port}}:{{port}} {{kebabCase projectName}}
+```
+
+## License
+
+MIT

@@ -1,0 +1,43 @@
+import { Router } from 'express';
+import { healthCheck } from '../controllers/health.js';
+
+const router = Router();
+
+// Health check endpoint
+router.get('/health', healthCheck);
+
+// API routes
+router.get('/', (req, res) => {
+  res.json({
+    message: 'Welcome to {{projectName}} API',
+    version: '{{version}}',
+    endpoints: {
+      health: '/health'
+    }
+  });
+});
+
+{{#if (includes codeHints.patterns 'crud')}}
+// Example CRUD routes
+router.get('/items', (req, res) => {
+  res.json({ items: [] });
+});
+
+router.post('/items', (req, res) => {
+  res.status(201).json({ id: '1', ...req.body });
+});
+
+router.get('/items/:id', (req, res) => {
+  res.json({ id: req.params.id });
+});
+
+router.put('/items/:id', (req, res) => {
+  res.json({ id: req.params.id, ...req.body });
+});
+
+router.delete('/items/:id', (req, res) => {
+  res.status(204).send();
+});
+{{/if}}
+
+export default router;

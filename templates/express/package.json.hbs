@@ -1,0 +1,47 @@
+{
+  "name": "{{kebabCase projectName}}",
+  "version": "{{version}}",
+  "description": "{{description}}",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write src/**/*.ts"{{#if (includes codeHints.features 'testing')}},
+    "test": "jest",
+    "test:watch": "jest --watch"{{/if}}
+  },
+  "keywords": [],
+  "author": "{{author}}",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "morgan": "^1.10.0",
+    "dotenv": "^16.3.1"{{#if (includes codeHints.features 'database')}},
+    "mongoose": "^8.0.0"{{/if}}{{#if (includes codeHints.features 'auth')}},
+    "jsonwebtoken": "^9.0.2",
+    "bcrypt": "^5.1.1"{{/if}}
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/cors": "^2.8.17",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.2",
+    "tsx": "^4.6.2",
+    "eslint": "^8.55.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.2",
+    "@typescript-eslint/parser": "^6.13.2",
+    "prettier": "^3.1.0"{{#if (includes codeHints.features 'testing')}},
+    "jest": "^29.7.0",
+    "@types/jest": "^29.5.10",
+    "ts-jest": "^29.1.1",
+    "supertest": "^6.3.3",
+    "@types/supertest": "^2.0.16"{{/if}}{{#if (includes codeHints.features 'auth')}},
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/bcrypt": "^5.0.2"{{/if}}
+  }
+}
