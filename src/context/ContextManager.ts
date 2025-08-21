@@ -13,7 +13,7 @@ import * as crypto from 'crypto';
 export interface SessionContext {
   sessionId: string;
   projectId: string;
-  agentType: 'claude' | 'gpt' | 'copilot' | 'cursor' | 'generic';
+  agentType: 'claude' | 'gpt' | 'copilot' | 'cursor' | 'gemini' | 'llama' | 'generic';
   agentId: string;
   startedAt: Date;
   lastActiveAt: Date;

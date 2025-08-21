@@ -22,6 +22,8 @@ import { ContextManager } from './context/ContextManager.js';
 import { CONTEXT_TOOLS } from './tools/context-tools.js';
 import { WorkflowEngine } from './workflow/WorkflowEngine.js';
 import { WORKFLOW_TOOLS } from './tools/workflow-tools.js';
+import { AgentOrchestrator } from './orchestration/AgentOrchestrator.js';
+import { ORCHESTRATION_TOOLS } from './tools/orchestration-tools.js';
 import { 
   HandoffRequest, 
   HandoffStatus, 
@@ -40,12 +42,13 @@ class HandoffMCP {
   private scaffolding: ScaffoldingEngine;
   private contextManager: ContextManager;
   private workflowEngine: WorkflowEngine;
+  private agentOrchestrator: AgentOrchestrator;
 
   constructor() {
     this.server = new Server(
       {
         name: 'handoff-mcp',
-        version: '1.2.0',
+        version: '1.3.0',
       },
       {
         capabilities: {
@@ -67,6 +70,13 @@ class HandoffMCP {
     
     // Initialize workflow engine with context manager
     this.workflowEngine = new WorkflowEngine(this.contextManager);
+    
+    // Initialize agent orchestrator
+    this.agentOrchestrator = new AgentOrchestrator(
+      this.contextManager,
+      this.workflowEngine,
+      { type: 'capability_based' }
+    );
     
     this.setupToolHandlers();
   }
@@ -402,9 +412,9 @@ class HandoffMCP {
           }
         ];
         
-        // Combine with context and workflow tools
+        // Combine with context, workflow, and orchestration tools
         return {
-          tools: [...existingTools, ...CONTEXT_TOOLS, ...WORKFLOW_TOOLS]
+          tools: [...existingTools, ...CONTEXT_TOOLS, ...WORKFLOW_TOOLS, ...ORCHESTRATION_TOOLS]
         };
     });
 

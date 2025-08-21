@@ -92,7 +92,7 @@ export interface WorkflowTemplate {
   expectedOutputs: string[];
 }
 
-export class WorkflowEngine extends EventEmitter {
+class WorkflowEngine extends EventEmitter {
   private workflows: Map<string, Workflow> = new Map();
   private templates: Map<string, WorkflowTemplate> = new Map();
   private contextManager: ContextManager;
@@ -761,3 +761,5 @@ export class WorkflowEngine extends EventEmitter {
     return Array.from(this.templates.values());
   }
 }
+
+export { WorkflowEngine };
