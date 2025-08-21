@@ -18,6 +18,8 @@ import { z } from 'zod';
 
 import { HandoffStorage } from './storage.js';
 import { ScaffoldingEngine } from './scaffolding/ScaffoldingEngine.js';
+import { ContextManager } from './context/ContextManager.js';
+import { CONTEXT_TOOLS } from './tools/context-tools.js';
 import { 
   HandoffRequest, 
   HandoffStatus, 
@@ -34,12 +36,13 @@ class HandoffMCP {
   private server: Server;
   private storage: HandoffStorage;
   private scaffolding: ScaffoldingEngine;
+  private contextManager: ContextManager;
 
   constructor() {
     this.server = new Server(
       {
         name: 'handoff-mcp',
-        version: '1.0.0',
+        version: '1.1.0',
       },
       {
         capabilities: {
@@ -50,13 +53,22 @@ class HandoffMCP {
 
     this.storage = new HandoffStorage();
     this.scaffolding = new ScaffoldingEngine();
+    
+    // Initialize context manager with optional Supabase
+    this.contextManager = new ContextManager({
+      supabaseUrl: process.env.SUPABASE_URL,
+      supabaseKey: process.env.SUPABASE_ANON_KEY,
+      openaiKey: process.env.OPENAI_API_KEY,
+      localStoragePath: './.handoff-context'
+    });
+    
     this.setupToolHandlers();
   }
 
   private setupToolHandlers() {
     this.server.setRequestHandler(ListToolsRequestSchema, async () => {
-      return {
-        tools: [
+      // Combine existing tools with new context tools
+      const existingTools: Tool[] = [
           // Project Management Tools
           {
             name: 'create_project',
@@ -382,8 +394,12 @@ class HandoffMCP {
               properties: {}
             }
           }
-        ] as Tool[]
-      };
+        ];
+        
+        // Combine with context tools
+        return {
+          tools: [...existingTools, ...CONTEXT_TOOLS]
+        };
     });
 
     this.server.setRequestHandler(CallToolRequestSchema, async (request) => {
