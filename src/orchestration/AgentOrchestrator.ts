@@ -95,7 +95,7 @@ export interface LoadBalancingStrategy {
   }>;
 }
 
-export class AgentOrchestrator extends EventEmitter {
+class AgentOrchestrator extends EventEmitter {
   private agents: Map<string, Agent> = new Map();
   private assignments: Map<string, TaskAssignment> = new Map();
   private collaborations: Map<string, CollaborationSession> = new Map();
@@ -801,3 +801,5 @@ export class AgentOrchestrator extends EventEmitter {
     return bestAgent;
   }
 }
+
+export { AgentOrchestrator };
