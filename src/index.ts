@@ -20,6 +20,8 @@ import { HandoffStorage } from './storage.js';
 import { ScaffoldingEngine } from './scaffolding/ScaffoldingEngine.js';
 import { ContextManager } from './context/ContextManager.js';
 import { CONTEXT_TOOLS } from './tools/context-tools.js';
+import { WorkflowEngine } from './workflow/WorkflowEngine.js';
+import { WORKFLOW_TOOLS } from './tools/workflow-tools.js';
 import { 
   HandoffRequest, 
   HandoffStatus, 
@@ -37,12 +39,13 @@ class HandoffMCP {
   private storage: HandoffStorage;
   private scaffolding: ScaffoldingEngine;
   private contextManager: ContextManager;
+  private workflowEngine: WorkflowEngine;
 
   constructor() {
     this.server = new Server(
       {
         name: 'handoff-mcp',
-        version: '1.1.0',
+        version: '1.2.0',
       },
       {
         capabilities: {
@@ -61,6 +64,9 @@ class HandoffMCP {
       openaiKey: process.env.OPENAI_API_KEY,
       localStoragePath: './.handoff-context'
     });
+    
+    // Initialize workflow engine with context manager
+    this.workflowEngine = new WorkflowEngine(this.contextManager);
     
     this.setupToolHandlers();
   }
@@ -396,9 +402,9 @@ class HandoffMCP {
           }
         ];
         
-        // Combine with context tools
+        // Combine with context and workflow tools
         return {
-          tools: [...existingTools, ...CONTEXT_TOOLS]
+          tools: [...existingTools, ...CONTEXT_TOOLS, ...WORKFLOW_TOOLS]
         };
     });
 
